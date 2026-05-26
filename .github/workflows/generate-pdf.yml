@@ -1,0 +1,63 @@
+name: Generate FESTA PDF
+
+# 手動実行（workflow_dispatch）。フェスタCSVと系統マスターCSVのURLを入力する。
+on:
+  workflow_dispatch:
+    inputs:
+      festa_csv_url:
+        description: "フェスタタブの gviz CSV URL（例: .../gviz/tq?tqx=out:csv&sheet=タブ名）"
+        required: true
+        type: string
+      master_csv_url:
+        description: "系統マスタータブの gviz CSV URL"
+        required: true
+        type: string
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Python deps
+        run: pip install -r requirements.txt
+
+      - name: Install Playwright Chromium
+        run: python -m playwright install --with-deps chromium
+
+      - name: Install fonts (@fontsource)
+        run: npm install
+
+      - name: Build rendered.html from CSV
+        run: |
+          python build.py \
+            "${{ inputs.festa_csv_url }}" \
+            "${{ inputs.master_csv_url }}"
+
+      - name: Render PDF
+        run: python make_pdf.py
+
+      - name: Resolve artifact name
+        id: meta
+        run: |
+          PDF=$(ls FESTA_CREW_ENTRY_SHEET_*.pdf | head -n1)
+          echo "pdf=$PDF" >> "$GITHUB_OUTPUT"
+          echo "name=${PDF%.pdf}" >> "$GITHUB_OUTPUT"
+
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.meta.outputs.name }}
+          path: ${{ steps.meta.outputs.pdf }}
+          if-no-files-found: error

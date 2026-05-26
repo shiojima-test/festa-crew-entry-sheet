@@ -1,0 +1,13 @@
+# 生成物
+rendered.html
+*.pdf
+
+# 依存（CIで npm install / pip install して再現）
+node_modules/
+
+# Python
+__pycache__/
+*.pyc
+
+# OS
+.DS_Store
