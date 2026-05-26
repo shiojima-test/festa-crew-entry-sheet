@@ -2,7 +2,8 @@
  * Config.gs — 定数とScript Properties定義
  *
  * PAT（GITHUB_PAT）は絶対にここへ直書きしない。PropertiesService から読む。
- * Script Properties は clasp 経由で Claude Code が登録する（GITHUB_PAT / DRIVE_FOLDER_ID）。
+ * Script Properties（GITHUB_PAT / DRIVE_FOLDER_ID）は
+ * 「プロジェクトの設定 → スクリプト プロパティ」から手動で登録する。
  */
 const CONFIG = {
   // GitHub リポジトリ情報

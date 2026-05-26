@@ -1,28 +1,13 @@
 /**
- * Setup.gs — Script Properties 登録用（PATをコードに残さない）。
+ * Setup.gs — Script Properties の確認用ヘルパー（任意）。
  *
- * 使い方（どちらか）:
- *  (A) clasp 経由（推奨・自動）:
- *      clasp run setupProperties --params '["<GITHUB_PAT>","<DRIVE_FOLDER_ID>"]'
- *      ※ Apps Script API 実行可能デプロイ＋clasp認証が必要。
- *  (B) エディタから手動:
- *      下の TMP_* に一時的に値を入れて1回実行 → 実行後すぐ TMP_* を空に戻す（PATを残さない）。
+ * 本番の登録は「プロジェクトの設定 → スクリプト プロパティ」から手動で行う:
+ *   GITHUB_PAT      = <PAT>
+ *   DRIVE_FOLDER_ID = 1-X74lXKOkm6cQj1NcYprfn95HvEGVZsO
  *
- * 登録後は getPropStatus() で「値が入っているか」だけ確認できる（値自体は出力しない）。
+ * 登録後、getPropStatus() を実行すると「値が入っているか」だけ確認できる
+ * （値そのものはログに出さない）。実行ログ（表示 → ログ）で結果を見る。
  */
-function setupProperties(pat, folderId) {
-  var TMP_PAT = '';        // (B)手動時のみ一時的に入れる。終わったら必ず空に戻す。
-  var TMP_FOLDER = '';     // 空なら Config.DEFAULT_FOLDER_ID を使うので未設定でも可。
-
-  var p = pat || TMP_PAT;
-  var f = folderId || TMP_FOLDER;
-  if (!p) throw new Error('PATが渡されていません（引数 or TMP_PAT）。');
-
-  var props = PropertiesService.getScriptProperties();
-  props.setProperty(CONFIG.PROP_PAT, p);
-  if (f) props.setProperty(CONFIG.PROP_FOLDER, f);
-  return getPropStatus();
-}
 
 /** 値の存在のみ確認（値そのものは返さない）。 */
 function getPropStatus() {
