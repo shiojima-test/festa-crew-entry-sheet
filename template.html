@@ -919,10 +919,12 @@
         {{join_method_body}}
       </div>
     </div>
-    <div class="qr-area"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASgAAAEoAQAAAADDfFG0AAAB7UlEQVR4nO1ay47DQAizV/n/X/YeDMxk00NPAWmHNm9LtRAQD5TCF/bzDeigDuphF0CfCaDoPQBR68lU9i3+goDwGmOTPVdPprJvQpF2lCDvKcr3yEZew1EECAmgIEqfUe/zmoS6blei0xGEE7KN11TUBUSZAgTKzvJxPZnK/n0UKu304ZOQqexb4uupWEXHWD2Zyv59FBV6K7KRkGWYL2B3TmXfghIVSiJFGEGonHX0124SIEVxl+KwTgGd+rXsAuDXYWj7iKhcFvHk480uZHlHrRmFOvreWPZNKEVGWquKIVVJi7Hh7F9HEWRWewL0kqjExImvzXLVw1z/MCpYNHWOnvhjkl+CkPJ8uwnfnsq+R0+kpNjWQemu8ORU9l3rx9pKde0OO/66oSIDs1vokGK8L3n0/d0iEUvQV4yhwu7E12blrkrKlYcZbMdfZe6vslqFS0yIEEK8TmXf1M8J0ZUXykbOmac9zPHlYVBMIP3laujMZd+n75Gtwns60pPIqexb4iuzzvWeEBHRxXxLTmXfg5IkpdRyf7Va0QSP/trM/cJqE65Ofgy4XcCmsu9GxSqIMa+VIJ742m2fb3tSS0YiupCdfs7Ntvm2qGhDR6N1KbCp7Hv8FU7JiWP854QlKeayb9VfL/3iQf0n1C8lfzDnTQ2pSAAAAABJRU5ErkJggg==" alt="申込フォームQR" style="width:100%;height:100%;display:block"></div>
+    <div class="qr-area"><img src="{{qr_image}}" alt="申込フォームQR" style="width:100%;height:100%;display:block"></div>
   </div>
 
 
+  <!-- 主催企業（値があれば帯を出す。空なら build.py が丸ごと削除） -->
+  {{HOST_BLOCK}}
   <!-- お問い合わせ -->
   <div class="presented-by-line">
     <span class="label">CONTACT</span>
