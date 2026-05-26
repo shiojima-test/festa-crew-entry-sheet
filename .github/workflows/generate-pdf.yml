@@ -12,6 +12,14 @@ on:
         description: "系統マスタータブの gviz CSV URL"
         required: true
         type: string
+      run_tag:
+        description: "実行識別タグ（GAS連携が起動したrunを特定するために使用。手動実行では空でOK）"
+        required: false
+        type: string
+        default: ""
+
+# run_tag が指定されていれば run-name に反映し、GAS から display_title で対象 run を特定できるようにする
+run-name: ${{ inputs.run_tag != '' && format('PDF: {0}', inputs.run_tag) || 'Generate FESTA PDF (manual)' }}
 
 jobs:
   build:
@@ -48,16 +56,17 @@ jobs:
       - name: Render PDF
         run: python make_pdf.py
 
-      - name: Resolve artifact name
+      - name: Resolve PDF path
         id: meta
         run: |
           PDF=$(ls FESTA_CREW_ENTRY_SHEET_*.pdf | head -n1)
           echo "pdf=$PDF" >> "$GITHUB_OUTPUT"
-          echo "name=${PDF%.pdf}" >> "$GITHUB_OUTPUT"
 
+      # 成果物名は固定（festa-pdf）。GAS は run_id の artifact 一覧から取得するため名前で迷わない。
+      # 中身のPDFファイル名は make_pdf.py の version 命名（FESTA_CREW_ENTRY_SHEET_<version>.pdf）を維持。
       - name: Upload PDF artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ steps.meta.outputs.name }}
+          name: festa-pdf
           path: ${{ steps.meta.outputs.pdf }}
           if-no-files-found: error
