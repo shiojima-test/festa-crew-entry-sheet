@@ -346,6 +346,25 @@
     border-left-color:var(--orange);
     font-size:12px;
   }
+  /* STEP6本番：文章（左）＋写真（右）の左右分割 */
+  .honban-body{
+    flex:1;
+    display:flex;
+    gap:3mm;
+    align-items:stretch;
+    margin-top:1.5mm;
+  }
+  .honban-text{
+    flex:1.15;
+    display:flex;
+    flex-direction:column;
+    min-width:0;
+  }
+  .honban-text .ph-date{ margin-top:0; }
+  .honban-photo{
+    flex:1;
+    min-width:0;
+  }
   .tl-phase .ph-date .tentative{
     font-size:6.5px;
     font-weight:500;
@@ -512,19 +531,32 @@
     font-weight:900;
     color:#000;
   }
-  .layout-placeholder{
-    background:var(--gray-ph);
-    border:1px dashed var(--gray-ph-text);
-    flex:1;
+  /* 写真プレースホルダー共通（薄め・写真前提） */
+  .photo-placeholder{
+    position:relative;
+    background:#f3f4f6;
+    border:1px solid #e2e5ea;
+    border-radius:3px;
+    overflow:hidden;
     display:flex;
     align-items:center;
     justify-content:center;
-    color:var(--gray-ph-text);
-    font-size:9px;
+  }
+  .photo-placeholder .ph-hint{
+    color:#b6bcc4;
+    font-size:8px;
     font-weight:700;
-    text-align:center;
-    padding:4px;
-    line-height:1.6;
+    letter-spacing:0.04em;
+  }
+  .photo-placeholder img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  /* 会場写真（旧グレー枠の位置） */
+  .venue-photo{
+    flex:1;
     min-height:26mm;
   }
 
@@ -765,11 +797,9 @@
       </div>
     </div>
     <div class="booth-right">
-      <div class="layout-title">当日の会場イメージ</div>
-      <div class="layout-placeholder">
-        ［ 当日の会場イメージ ］<br>
-        会場図や交流写真など<br>
-        ※決定次第こちらに差し替えます
+      <div class="layout-title">プログラムイメージ</div>
+      <div class="venue-photo photo-placeholder">
+        <span class="ph-hint">写真がここに入ります</span>
       </div>
     </div>
   </div>
@@ -833,9 +863,16 @@
       <!-- Phase 2: 本番（grid-column:2 / grid-row:1-3 で縦に2行ぶち抜き） -->
       <div class="tl-phase honban">
         <span class="ph-num">STEP 6 本番</span>
-        <div class="ph-date">7/23（金）<br>7/24（土）</div>
-        <div class="ph-title">埼スタで<br>小学生をサポート！</div>
-        <div class="ph-desc">事前研修で学んだことを活かし、ピッチサイドで小学生の自由研究をサポート。芝の観察・観測・育成を一緒に進め、調べたことを記録します。子どもと関わりながら、伝える力を実践で磨く二日間です。</div>
+        <div class="honban-body">
+          <div class="honban-text">
+            <div class="ph-date">7/23（金）<br>7/24（土）</div>
+            <div class="ph-title">埼スタで<br>小学生をサポート！</div>
+            <div class="ph-desc">事前研修で学んだことを活かし、ピッチサイドで小学生の自由研究をサポート。芝の観察・観測・育成を一緒に進め、調べたことを記録します。子どもと関わりながら、伝える力を実践で磨く二日間です。</div>
+          </div>
+          <div class="honban-photo photo-placeholder">
+            <span class="ph-hint">写真がここに入ります</span>
+          </div>
+        </div>
       </div>
 
       <!-- オンライン部室（grid内：左下） -->
